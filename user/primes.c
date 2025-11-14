@@ -1,14 +1,12 @@
 //
 // Created by baijiajun on 25-11-12.
 //
-#include <stdio.h>
-#include <stdlib.h>
-
+#include "kernel/types.h"
 #include "user/user.h"
 #include "kernel/stat.h"
-#include "kernel/types.h"
 
-void sieve(int left_pipe)            //进行质数筛选
+
+void sieve(int left_pipe[2])            //进行质数筛选
 {
     int p;
     read(left_pipe[0],&p,sizeof(p));
@@ -16,7 +14,7 @@ void sieve(int left_pipe)            //进行质数筛选
     {
         exit(0);
     }
-    printf("primes %d\n",p);
+    printf("prime %d\n",p);
 
     int right_pipe[2];
     pipe(right_pipe);
@@ -25,7 +23,7 @@ void sieve(int left_pipe)            //进行质数筛选
     {
         close(right_pipe[1]);
         close(left_pipe[0]);
-        sieve(right_pipe[0]);
+        sieve(right_pipe);
     }
     else
     {

@@ -1,12 +1,12 @@
 //
 // Created by baijiajun on 25-11-13.
 //
-#include "user.h"
-#include "../kernel//stat.h"
-#include "../kernel/types.h"
-#include "../kernel//fs.h"
+#include "kernel/types.h"
+#include "user/user.h"
+#include "kernel/stat.h"
+#include "kernel/fs.h"
 
-void run(char *pro , char*arg)
+void run(char *pro , char**arg)
 {
     if (fork() == 0)
     {
@@ -19,19 +19,19 @@ void run(char *pro , char*arg)
 int main(int argc , char * argv[])
 {
     char buf[1024];
-    char* p , *last_p;
+    char* p=buf , *last_p=buf;
     char *argsbuf[128];
     char **args = argsbuf;
     for (int i = 1; i< argc; i++)
     {
-        *agrs = argv[i];
+        *args = argv[i];
         args++;
     }
     char **pa = args;
 
-    while (read(0,p,1) != 0)
+    while (read(0,p,1)!=0)
     {
-        if (*p == '' || *p == '\n')
+        if (*p == ' ' || *p == '\n')
         {
             *p = '\0';
             *(pa++) = last_p;
@@ -45,7 +45,7 @@ int main(int argc , char * argv[])
         }
         p++;
     }
-    if (pa ！= args)
+    if (pa != args)
     {
         *p = '\0';
         *(pa++) = last_p;

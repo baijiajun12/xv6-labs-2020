@@ -1,14 +1,11 @@
 //
 // Created by baijiajun on 25-11-12.
 //
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-#include "user.h"
-#include "../kernel//stat.h"
-#include "../kernel/types.h"
-#include "../kernel/fs.h"
+#include "kernel/types.h"
+#include "user/user.h"
+#include "kernel/stat.h"
+#include "kernel/fs.h"
 
 void find(char *path , char *target)
 {
@@ -17,7 +14,7 @@ void find(char *path , char *target)
     int fd;
     struct dirent de;
     struct stat st;
-    if (fd = open(path,0) < 0)
+    if ((fd = open(path,0)) < 0)
     {
         fprintf(2,"can't open %s\n",path);
         return;
@@ -38,7 +35,7 @@ void find(char *path , char *target)
         break;
         case T_DIR:
         strcpy(buf,path);
-        p = buf;
+        p = buf+strlen(buf);
         *p++ = '/';
         while (read(fd,&de,sizeof(de)) ==  sizeof(de))
         {
